@@ -7,7 +7,11 @@ const VerifyToken = (req, res) => {
         if (challenge != null && token != null && token === verificationToken) {
             res.send(challenge);
         }else {
-            res.status(400).send();
+            res.status(400).send({data: {
+                challenge,
+                token,
+                verificationToken,
+            }});
         }
 
     } catch (err) {
