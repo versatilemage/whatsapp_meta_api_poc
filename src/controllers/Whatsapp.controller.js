@@ -1,5 +1,18 @@
 const VerifyToken = (req, res) => {
-    res.send("To verify token");
+    try {
+        const verificationToken = process.env.VERIFY_TOKEN;
+        const token = req.query["hub.verify_token"];
+        const challenge = req.body["hub.challenge"];
+
+        if (challenge != null && token != null && token === verificationToken) {
+            res.send(challenge);
+        }else {
+            res.status(400).send();
+        }
+
+    } catch (err) {
+        res.status(500).send();
+    }
 }
 
 const ReceiveMessage = (req, res) => {
